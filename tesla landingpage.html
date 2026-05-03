@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Nexus | The Future of Energy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --tesla-red: #E2231A; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; margin: 0; overflow-x: hidden; }
+
+        /* 3D Glassmorphism */
+        .glass-3d { 
+            background: rgba(15, 15, 15, 0.7); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            transform: perspective(1000px);
+            transition: transform 0.4s ease;
+        }
+        .glass-3d:hover { transform: perspective(1000px) translateY(-5px) rotateX(2deg); }
+
+        /* Smooth Blur Transitions */
+        #content-body { 
+            transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+            filter: blur(0px);
+        }
+
+        /* Scoped Styles for the About Module */
+    .nexus-about-container {
+        margin: 20px auto;
+        max-width: 800px;
+        perspective: 1000px;
+    }
+
+    .about-trigger-btn {
+        width: 100%;
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(226, 35, 26, 0.3);
+        color: white;
+        padding: 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .about-trigger-btn:hover {
+        background: rgba(226, 35, 26, 0.1);
+        border-color: #E2231A;
+        transform: translateY(-5px) rotateX(5deg);
+        box-shadow: 0 15px 35px rgba(226, 35, 26, 0.2);
+    }
+
+    #about-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.8s ease-in-out, opacity 0.5s ease;
+        opacity: 0;
+        margin-top: 15px;
+    }
+
+    #about-content.reveal {
+        max-height: 1000px;
+        opacity: 1;
+    }
+
+    .about-card {
+        background: linear-gradient(135deg, rgba(25, 25, 25, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 30px;
+        color: #a1a1aa;
+        line-height: 1.8;
+        font-size: 14px;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    }
+
+    .highlight-red { color: #E2231A; font-weight: 600; }
+    .about-grid { display: grid; grid-template-cols: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .stat-box { border-left: 2px solid #E2231A; padding-left: 15px; }
+    .stat-label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #52525b; }
+
+    @media (max-width: 640px) {
+        .about-grid { grid-template-cols: 1fr; }
+    }
+
+
+        .blur-active { filter: blur(30px) !important; pointer-events: none; }
+
+        /* Animations */
+        .tesla-red-glow { filter: drop-shadow(0 0 10px rgba(226, 35, 26, 0.5)); }
+        
+        @keyframes car-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        .animate-car { animation: car-float 4s ease-in-out infinite; }
+
+        .gradient-text {
+            background: linear-gradient(180deg, #fff 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--tesla-red); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+   
+<div id="preloader" class="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center transition-opacity duration-700">
+    <style>
+        .tesla-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            letter-spacing: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(to right, #333 0%, #fff 50%, #333 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            text-indent: 1.5rem; /* Offsets letter-spacing to center text */
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .loader-glow {
+            filter: drop-shadow(0 0 20px rgba(226, 35, 26, 0.4));
+        }
+        
+        .loading-text {
+            font-size: 10px;
+            letter-spacing: 0.5rem;
+            color: #444;
+            margin-top: 2rem;
+            text-transform: uppercase;
+        }
+    </style>
+
+    <!-- Artistic Tesla Text -->
+    <div class="relative flex flex-col items-center">
+        
+        <img src="logo (2).png" style="width:50px; height: 50px;">
+        <br>
+        <h1 class="tesla-text text-5xl md:text-7xl mb-4 select-none">
+            TESLA
+        </h1>
+        
+        <!-- Red Accent Line -->
+        <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50 mb-8"></div>
+
+        <!-- Progress Bar Container -->
+        <div class="w-64 h-[2px] bg-zinc-900 rounded-full overflow-hidden loader-glow">
+            <div id="progress-bar" class="h-full bg-red-600 w-0 transition-all duration-[5000ms] ease-linear"></div>
+        </div>
+
+        <p class="loading-text animate-pulse">Initializing Systems</p>
+    </div>
+</div>
+
+    <!-- 2. AUTH MODAL (Hidden by default) -->
+    <div id="login-screen" class="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 hidden opacity-0 transition-all duration-500 p-4">
+        <div class="glass-3d p-8 md:p-10 rounded-[2.5rem] w-full max-w-md border border-red-600/20">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="lock" class="text-red-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold tracking-tighter uppercase">Nexus Secure Login</h2>
+                <p class="text-zinc-500 text-[10px] tracking-widest mt-2 uppercase">Authorized Personnel Only</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-[9px] uppercase font-bold text-zinc-500 ml-2">Neural Identity</label>
+                    <input type="email" id="email" class="w-full bg-zinc-900/50 border border-white/5 rounded-2xl px-5 py-4 focus:border-red-600 outline-none transition-all text-sm" placeholder="example@gmail.com">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[9px] uppercase font-bold text-zinc-500 ml-2">Access Key</label>
+                    <input type="password" id="password" class="w-full bg-zinc-900/50 border border-white/5 rounded-2xl px-5 py-4 focus:border-red-600 outline-none transition-all text-sm" placeholder="six digit">
+                </div>
+                
+                <button onclick="handleLogin()" class="w-full bg-red-600 hover:bg-white hover:text-black py-4 rounded-2xl font-bold uppercase tracking-widest transition-all duration-500 shadow-lg shadow-red-600/20">Authenticate</button>
+                
+                <button onclick="toggleLogin(false)" class="w-full text-zinc-500 hover:text-white py-2 text-[10px] font-bold uppercase tracking-[2px] transition-all">
+                    Cancel Request
+                </button>
+            </div>
+            <p id="login-error" class="text-red-500 text-[10px] text-center mt-4 opacity-0 font-mono uppercase">Access Denied: Invalid Credentials</p>
+        </div>
+    </div>
+
+    <!-- 3. MAIN CONTENT -->
+    <div id="content-body" class="opacity-0 transition-opacity duration-1000">
+        
+        <!-- Navigation -->
+        <nav class="fixed top-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
+            <div class="flex items-center gap-2">
+                <svg class="w-6" viewBox="0 0 342 35" fill="#E2231A"><path d="M0 .1a9.7 9.7 0 0 1 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 1 7-7H0z"/></svg>
+                <img src="logo (2).png" style="width:50px; height: 50px;">
+                <span class="font-black tracking-tighter text-lg uppercase italic">Nexus</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-[10px] uppercase font-bold tracking-[3px] text-zinc-400">
+                
+                <a href="#investors" class="hover:text-red-600 transition-colors">Investors</a>
+                <a href="#shares" class="hover:text-red-600 transition-colors">Shares</a>
+                <a href="#fleet" class="hover:text-red-600 transition-colors">Fleet</a>
+            </div>
+            <button onclick="toggleLogin(true)" class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all">Sign In</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="about" class="min-h-screen flex flex-col justify-center items-center px-6 pt-20">
+            <div class="text-center max-w-5xl">
+                <h1 class="text-5xl md:text-9xl font-black italic tracking-tighter gradient-text mb-4">Legendary Tesla Stocks</h1>
+                <p class="text-zinc-400 text-xs md:text-sm uppercase tracking-[8px] mb-12">Sustainable Energy • Autonomous Future</p>
+                
+                <div class="glass-3d p-8 md:p-16 rounded-[3rem] relative overflow-hidden group">
+                    <div class="absolute -right-20 -bottom-20 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="zap" class="w-64 h-64"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-4xl font-bold mb-6 leading-tight">Tesla Nexus is the bridge between human intent and machine intelligence.</h2>
+                    <p class="text-zinc-500 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+                        We are scaling the world's most advanced AI training cluster to solve real-world problems, 
+                        from humanoid robotics to globally decentralized energy grids.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <div class="nexus-about-container">
+    <!-- Trigger Button -->
+    <button class="about-trigger-btn" onclick="toggleAbout()">
+        <i data-lucide="info"></i>
+        Discover Nexus Architecture
+    </button>
+
+    <!-- Hidden Content -->
+    <div id="about-content">
+        <div class="about-card">
+            <h3 class="text-white text-2xl font-black italic mb-4 uppercase italic">The Genesis of Nexus</h3>
+            <p>
+                Developed in <span class="highlight-red">late 2025</span> and officially deployed in 2026, Tesla Nexus represents the pinnacle of 
+                decentralized neural engineering. It was designed as a unified operating system for autonomous energy grids and 
+                large-scale robotics. As of Q2 2026, the Nexus ecosystem holds a projected net worth of 
+                <span class="highlight-red">$840 Billion</span>, fueled by aggressive R&D in AI training clusters.
+            </p>
+            <p class="mt-4">
+                The platform has seen unprecedented market activity; over <span class="highlight-red">120 million shares</span> 
+                were transacted during the initial private launch, with institutional giants acquiring 65% of the floating equity 
+                to stabilize the energy-node network. 
+            </p>
+            
+            <div class="about-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Access Protocol</span>
+                    <p class="text-white font-bold">Tier-1 Authorized Users & Stakeholders</p>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Acquisition</span>
+                    <p class="text-white font-bold">Via Nexus Portal / Accredited Brokers</p>
+                </div>
+            </div>
+
+            <p class="mt-6 text-xs italic">
+                To gain access, users must pass a <span class="highlight-red">Neural Link Verification</span> via the authenticated 
+                sign-in portal. Once identity is confirmed, the Nexus dashboard provides real-time equity management and hardware 
+                command interfaces.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Stats Section (Investors & Shares) -->
+        <section class="py-24 px-6 bg-[#080808]">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Investors Card -->
+                <div id="investors" class="glass-3d p-12 rounded-[2.5rem] border-l-4 border-red-600">
+                    <p class="text-zinc-500 uppercase text-[10px] font-bold tracking-[4px] mb-2">Global Backing</p>
+                    <h3 class="text-5xl md:text-7xl font-black italic"><span id="count-investors">0</span>+</h3>
+                    <p class="text-zinc-400 mt-4">Institutional and private investors driving the green revolution.</p>
+                </div>
+                <!-- Shares Card -->
+                <div id="shares" class="glass-3d p-12 rounded-[2.5rem] border-l-4 border-white">
+                    <p class="text-zinc-500 uppercase text-[10px] font-bold tracking-[4px] mb-2">Market Capital</p>
+                    <h3 class="text-5xl md:text-7xl font-black italic">$<span id="count-shares">0</span>B</h3>
+                    <p class="text-zinc-400 mt-4">Projected Nexus equity valuation for the Q4 fiscal cycle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Car Fleet Section -->
+        <section id="fleet" class="py-24 px-6 max-w-7xl mx-auto">
+            <h2 class="text-3xl font-black italic mb-12 tracking-tighter">PROJECT <span class="text-red-600">FLEET</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Car 1 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Model S Plaid</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Beyond Ludicrous Speed</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">1.99s 0-60</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+                <!-- Car 2 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1699039011036-7ec97017ba5a?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car" style="animation-delay: -1s;">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Cybertruck</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Exoskeleton Hardened</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">AWD Tri-Motor</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+                <!-- Car 3 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car" style="animation-delay: -2s;">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Roadster</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Aero-Efficiency Master</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">250mph+ Top Speed</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+                <!-- Car 1 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Model S Plaid</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Beyond Ludicrous Speed</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">1.99s 0-60</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+                <!-- Car 2 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1699039011036-7ec97017ba5a?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car" style="animation-delay: -1s;">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Cybertruck</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Exoskeleton Hardened</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">AWD Tri-Motor</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+                <!-- Car 3 -->
+                <div class="glass-3d p-6 rounded-[2rem] group cursor-pointer">
+                    <div class="overflow-hidden rounded-2xl mb-6">
+                        <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=600" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 animate-car" style="animation-delay: -2s;">
+                    </div>
+                    <h4 class="text-xl font-bold uppercase italic">Roadster</h4>
+                    <p class="text-zinc-500 text-xs mt-2">Aero-Efficiency Master</p>
+                    <div class="mt-6 flex justify-between items-center">
+                        <span class="text-red-600 font-bold text-sm">250mph+ Top Speed</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-700 group-hover:text-white transition-colors"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black border-t border-white/5 pt-20 pb-10 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                    <div>
+                        <div class="flex items-center gap-2 mb-6">
+                            <svg class="w-5" viewBox="0 0 342 35" fill="#E2231A"><path d="M0 .1a9.7 9.7 0 0 1 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 1 7-7H0z"/></svg>
+                            <span class="font-black uppercase italic text-sm">Nexus Support</span>
+                        </div>
+                        <p class="text-zinc-500 text-xs leading-relaxed">
+                            Driving the world towards a zero-emission future. Join the network.
+                        </p>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-[10px] uppercase tracking-[3px] mb-6">Digital Support</h5>
+                        <ul class="text-zinc-400 text-xs space-y-4">
+                            <li class="flex items-center gap-2 hover:text-red-600 cursor-pointer transition-colors">
+                                <i data-lucide="mail" class="w-4 h-4"></i> nexus.support@tesla.com
+                            </li>
+                            <li class="flex items-center gap-2 hover:text-red-600 cursor-pointer transition-colors">
+                                <i data-lucide="ticket" class="w-4 h-4"></i> Raise a Support Ticket
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-[10px] uppercase tracking-[3px] mb-6">Newsletter</h5>
+                        <div class="flex gap-2">
+                            <input type="text" class="bg-zinc-900 border border-white/5 rounded-lg px-4 py-2 text-xs flex-1 outline-none focus:border-red-600" placeholder="Enter Email">
+                            <button class="bg-white text-black p-2 rounded-lg hover:bg-red-600 hover:text-white transition-all">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center pt-8 border-t border-white/5">
+                    <p class="text-zinc-700 text-[9px] uppercase tracking-[5px]">© 2026 Tesla Nexus • All Rights Reserved</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // 1. Preloader & Content Reveal
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('progress-bar');
+            if (bar) bar.style.width = '100%';
+
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    document.getElementById('content-body').classList.add('opacity-100');
+                    // Start stats counters after loading
+                    animateValue("count-investors", 0, 1450, 2000);
+                    animateValue("count-shares", 0, 840, 2000);
+                }, 700);
+            }, 5000);
+        });
+
+        // 2. Statistics Counter Function
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerText = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // 3. Login Modal Control
+        function toggleLogin(show) {
+            const login = document.getElementById('login-screen');
+            const body = document.getElementById('content-body');
+            
+            if (show) {
+                login.classList.remove('hidden');
+                setTimeout(() => {
+                    login.classList.add('opacity-100');
+                    body.classList.add('blur-active');
+                }, 10);
+            } else {
+                login.classList.remove('opacity-100');
+                body.classList.remove('blur-active');
+                setTimeout(() => {
+                    login.classList.add('hidden');
+                }, 500);
+            }
+        }
+
+        // 4. Auth Logic
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+
+            if(email === "user@gmail.com" && pass === "123456") {
+                alert("Identity Confirmed. Welcome back.");
+                window.location.href = 'tesla.html';
+                //toggleLogin(false);
+            } else {
+                error.style.opacity = '1';
+                setTimeout(() => error.style.opacity = '0', 3000);
+            }
+        }
+
+
+
+        function toggleAbout() {
+        const content = document.getElementById('about-content');
+        content.classList.toggle('reveal');
+        
+        // Optional: Re-initialize icons if they disappear
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+    </script>
+</body>
+</html>
